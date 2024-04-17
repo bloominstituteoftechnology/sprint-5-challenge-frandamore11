@@ -5,7 +5,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   const currentYear = new Date().getFullYear()
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
 
-  console.log(axios)
+  // console.log(axios)
   const learnersURL = 'http://localhost:3003/api/learners'
   const mentorsURL = 'http://localhost:3003/api/mentors'
 
@@ -28,7 +28,15 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       return {...learner, mentors: mentorNames};
     });
   
-    console.log(learnersWithMentorNames); // use or display the data as needed
+    // console.log(learnersWithMentorNames); // use or display the data as needed
+    const cardSection = document.querySelector('.cards');
+
+  // For each learner, create a card and append it to the card section
+    learnersWithMentorNames.forEach(learner => {
+      const card = createLearnerCard(learner);
+      cardSection.appendChild(card);
+    }); 
+
   }).catch(error => console.log(error)); // catch any errors
 
   //create a function to build the learner cards. 
@@ -47,18 +55,43 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     email.textContent = learner.email;
     mentorTitle.textContent = 'Mentors';
 
-    card.appendChild(name)
-    card.appendChild(email)
-    //first append the li to the uls, then appedn this to the mentor title header. 
-    mentorUl.appendChild(mentors)
-    mentorTitle.appendChild(mentorUl)
-    card.appendChild(mentorTitle)
+    learner.mentors.forEach(mentorName => {
+      const mentorLi = document.createElement('li');
+      mentorLi.textContent = mentorName;
+      mentorUl.appendChild(mentorLi);
+    });
+  
+    // Append elements to card
+    card.appendChild(name);
+    card.appendChild(email);
+    mentorTitle.appendChild(mentorUl);
+    card.appendChild(mentorTitle);
 
-    return card
+    //adding styling to the card
+    card.style.border = '1px solid rgb(93, 93, 93)'; 
+    card.style.color = 'gray'; 
+    card.style.opacity = '0.6'; 
+    card.style.padding = '1rem'; 
+    card.style.margin = '0.8rem'; 
+    card.style.marginTop = '2rem'; 
+    card.style.width = '200px'; // Set a width
+    card.style.boxSizing = 'border-box'; // Include border and padding in element's total width and height
+    card.style.borderRadius = '5px'; 
+    card.style.backgroundColor = 'rgba(233, 223, 230, 0.75)'; 
+    card.style.transition = 'background-color 0.3s ease'; 
+    card.style.display = 'block'; 
+    
+    
+  
+    return card;
 
   }
 
   
+
+  
+
+
 
 
 
