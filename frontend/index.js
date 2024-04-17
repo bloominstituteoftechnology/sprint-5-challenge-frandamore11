@@ -8,6 +8,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   // console.log(axios)
   const learnersURL = 'http://localhost:3003/api/learners'
   const mentorsURL = 'http://localhost:3003/api/mentors'
+  const infoElement = document.querySelector('.info');
 
   Promise.all([
     axios.get(learnersURL),
@@ -36,6 +37,8 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const card = createLearnerCard(learner);
       cardSection.appendChild(card);
     }); 
+
+    infoElement.textContent = 'No learner is selected';
 
   }).catch(error => console.log(error)); // catch any errors
 
@@ -90,15 +93,16 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     // Add a click event listener to the card
     card.addEventListener('click', () => {
-      // Remove the "selected" class from all cards
-      const allCards = document.querySelectorAll('.card');
-      allCards.forEach((card) => {
-        card.classList.remove('selected');
-      });
+      // Toggle the "selected" class on the clicked card
+      card.classList.toggle('selected');
 
-      // Add the "selected" class to the clicked card
-      card.classList.add('selected');
-      infoElement.textContent = `The selected learner is ${learner.fullName}`;
+      if (card.classList.contains('selected')) {
+        // If the card is now selected, update the "info" element with the learner's name
+        infoElement.textContent = `The selected learner is ${learner.fullName}`;
+      } else {
+        // If the card is now deselected, update the "info" element to say "No learner is selected"
+        infoElement.textContent = 'No learner is selected';
+      }
     });
 
     return card;
