@@ -31,6 +31,37 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     console.log(learnersWithMentorNames); // use or display the data as needed
   }).catch(error => console.log(error)); // catch any errors
 
+  //create a function to build the learner cards. 
+
+
+  function createLearnerCard(learner) {
+    //create card elements
+    const card = document.createElement('div')
+    const name = document.createElement('h3')
+    const email = document.createElement('div')
+    const mentorTitle = document.createElement('h4')
+    const mentorUl = document.createElement('ul')
+    const mentors = document.createElement('li')
+
+    name.textContent = learner.fullName;
+    email.textContent = learner.email;
+    mentorTitle.textContent = 'Mentors';
+
+    card.appendChild(name)
+    card.appendChild(email)
+    //first append the li to the uls, then appedn this to the mentor title header. 
+    mentorUl.appendChild(mentors)
+    mentorTitle.appendChild(mentorUl)
+    card.appendChild(mentorTitle)
+
+    return card
+
+  }
+
+  
+
+
+
  
 
 
