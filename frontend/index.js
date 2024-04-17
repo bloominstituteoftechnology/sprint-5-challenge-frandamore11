@@ -44,57 +44,67 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
   function createLearnerCard(learner) {
     //create card elements
-    const card = document.createElement('div')
-    card.className = 'card'
-    const name = document.createElement('h3')
-    const email = document.createElement('div')
-    const mentorTitle = document.createElement('h4')
-    const mentorUl = document.createElement('ul')
-    const mentors = document.createElement('li')
+    const card = document.createElement('div');
+    card.className = 'card';
+    const name = document.createElement('h3');
+    const email = document.createElement('div');
+    const infoElement = document.querySelector('.info');
 
     name.textContent = learner.fullName;
     email.textContent = learner.email;
-    mentorTitle.textContent = 'Mentors';
 
+    // Create the mentor title and list
+    const mentorTitle = document.createElement('h4');
+    mentorTitle.textContent = 'Mentors';
+    const mentorList = document.createElement('ul');
+    mentorList.style.display = 'none'; // Hide the list by default
+    const arrowSpan = document.createElement('span');
+    arrowSpan.textContent = '➡️'; // This is a Unicode right arrow
+    arrowSpan.style.marginRight = '5px'; // Add some spacing between the arrow and the title
+    mentorTitle.prepend(arrowSpan);
+
+    // Create a list item for each mentor
     learner.mentors.forEach(mentorName => {
       const mentorLi = document.createElement('li');
       mentorLi.textContent = mentorName;
-      mentorUl.appendChild(mentorLi);
+      mentorList.appendChild(mentorLi);
     });
-  
+
+    // Add a click event listener to the title
+    mentorTitle.addEventListener('click', () => {
+      // Toggle the visibility of the list when the title is clicked
+      if (mentorList.style.display === 'none') {
+        mentorList.style.display = 'block';
+        arrowSpan.textContent = '⬇️';; // Point down when list is visible
+      } else {
+        mentorList.style.display = 'none';
+        arrowSpan.textContent = '➡️'; // Point right when list is hidden
+      }
+    });
+
     // Append elements to card
     card.appendChild(name);
     card.appendChild(email);
-    mentorTitle.appendChild(mentorUl);
     card.appendChild(mentorTitle);
+    card.appendChild(mentorList);
 
-    //now add event listeners to select the cards. 
-
+    // Add a click event listener to the card
     card.addEventListener('click', () => {
       // Remove the "selected" class from all cards
       const allCards = document.querySelectorAll('.card');
       allCards.forEach((card) => {
         card.classList.remove('selected');
       });
-  
+
       // Add the "selected" class to the clicked card
       card.classList.add('selected');
+      infoElement.textContent = `The selected learner is ${learner.fullName}`;
     });
-    
+
     return card;
 
   }
-
   
-
-  
-
-
-
-
-
- 
-
 
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
