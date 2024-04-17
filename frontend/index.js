@@ -45,6 +45,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   function createLearnerCard(learner) {
     //create card elements
     const card = document.createElement('div')
+    card.className = 'card'
     const name = document.createElement('h3')
     const email = document.createElement('div')
     const mentorTitle = document.createElement('h4')
@@ -67,22 +68,19 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     mentorTitle.appendChild(mentorUl);
     card.appendChild(mentorTitle);
 
-    //adding styling to the card
-    card.style.border = '1px solid rgb(93, 93, 93)'; 
-    card.style.color = 'gray'; 
-    card.style.opacity = '0.6'; 
-    card.style.padding = '1rem'; 
-    card.style.margin = '0.8rem'; 
-    card.style.marginTop = '2rem'; 
-    card.style.width = '200px'; // Set a width
-    card.style.boxSizing = 'border-box'; // Include border and padding in element's total width and height
-    card.style.borderRadius = '5px'; 
-    card.style.backgroundColor = 'rgba(233, 223, 230, 0.75)'; 
-    card.style.transition = 'background-color 0.3s ease'; 
-    card.style.display = 'block'; 
-    
-    
+    //now add event listeners to select the cards. 
+
+    card.addEventListener('click', () => {
+      // Remove the "selected" class from all cards
+      const allCards = document.querySelectorAll('.card');
+      allCards.forEach((card) => {
+        card.classList.remove('selected');
+      });
   
+      // Add the "selected" class to the clicked card
+      card.classList.add('selected');
+    });
+    
     return card;
 
   }
