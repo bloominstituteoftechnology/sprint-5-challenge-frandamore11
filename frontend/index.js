@@ -45,6 +45,8 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   //create a function to build the learner cards. 
 
 
+  let selectedCard = null;
+
   function createLearnerCard(learner) {
     //create card elements
     const card = document.createElement('div');
@@ -97,22 +99,42 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     card.appendChild(mentorList);
 
     // Add a click event listener to the card
-    card.addEventListener('click', () => {
-      // Toggle the "selected" class on the clicked card
-      card.classList.toggle('selected');
-
+    card.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent the click from bubbling up to the document
+    
       if (card.classList.contains('selected')) {
-        // If the card is now selected, update the "info" element with the learner's name
-        infoElement.textContent = `The selected learner is ${learner.fullName}`;
-      } else {
-        // If the card is now deselected, update the "info" element to say "No learner is selected"
+        // If the clicked card is already selected, deselect it
+        card.classList.remove('selected');
         infoElement.textContent = 'No learner is selected';
+        name.textContent = ''; // Clear the name and ID
+        selectedCard = null;
+      } else {
+        // If a different card is selected, deselect it
+        if (selectedCard) {
+          selectedCard.classList.remove('selected');
+          name.textContent.remove = `ID ${learner.id}`;
+        }
+    
+        // Select the clicked card
+        card.classList.add('selected');
+        infoElement.textContent = `The selected learner is ${learner.fullName}`;
+        name.textContent = `${learner.fullName}, ID ${learner.id}`; // Display the learner ID here
+        selectedCard = card;
       }
     });
-
+  
     return card;
-
   }
+  
+  // Add this outside of your existing code
+  document.addEventListener('click', () => {
+    if (selectedCard) {
+      selectedCard.classList.remove('selected');
+      infoElement.textContent = 'No learner is selected';
+      name.textContent = '';
+      selectedCard = null;
+    }
+  });
   
 
   // 👆 WORK WORK ABOVE THIS LINE 👆
