@@ -59,12 +59,13 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     // Create the mentor title and list
     const mentorTitle = document.createElement('h4');
     mentorTitle.textContent = 'Mentors';
+    mentorTitle.classList.add('closed');
     const mentorList = document.createElement('ul');
-    mentorList.style.display = 'none'; // Hide the list by default
+    // mentorList.style.display = 'none'; // Hide the list by default
     const arrowSpan = document.createElement('span');
-    arrowSpan.textContent = '➡️'; // This is a Unicode right arrow
+    // arrowSpan.textContent = '➡️'; // This is a Unicode right arrow
     arrowSpan.style.marginRight = '5px'; // Add some spacing between the arrow and the title
-    mentorTitle.prepend(arrowSpan);
+    // mentorTitle.prepend(arrowSpan);
 
     // Create a list item for each mentor
     learner.mentors.forEach(mentorName => {
@@ -78,10 +79,14 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       // Toggle the visibility of the list when the title is clicked
       if (mentorList.style.display === 'none') {
         mentorList.style.display = 'block';
-        arrowSpan.textContent = '⬇️';; // Point down when list is visible
+        // arrowSpan.textContent = '⬇'; // Point down when list is visible
+        mentorTitle.classList.remove('closed');
+        mentorTitle.classList.add('open');
       } else {
         mentorList.style.display = 'none';
-        arrowSpan.textContent = '➡️'; // Point right when list is hidden
+        // arrowSpan.textContent = '➡'; // Point right when list is hidden
+        mentorTitle.classList.remove('open');
+        mentorTitle.classList.add('closed');
       }
     });
 
